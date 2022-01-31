@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="SpatialMaterial" id=4]
+flags_unshaded = true
+
+[sub_resource type="SpatialMaterial" id=3]
+flags_unshaded = true
+albedo_color = Color( 1, 0.623529, 0, 1 )
+
+[sub_resource type="SphereShape" id=2]
+
+[node name="RigidBody" type="RigidBody"]
+
+[node name="CSGSphere2" type="CSGSphere" parent="."]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0 )
+radius = 0.8
+radial_segments = 24
+rings = 12
+material = SubResource( 4 )
+
+[node name="CSGSphere" type="CSGSphere" parent="."]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0 )
+invert_faces = true
+radial_segments = 24
+rings = 12
+material = SubResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0 )
+visible = false
+shape = SubResource( 2 )

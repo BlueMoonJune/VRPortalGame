@@ -1,0 +1,72 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://materials/orbs/orange_orb_ext.tres" type="Material" id=1]
+[ext_resource path="res://materials/orbs/interior.tres" type="Material" id=2]
+[ext_resource path="res://src/scripts/orange_portal_orb.gd" type="Script" id=3]
+[ext_resource path="res://src/shaders/inverse.tres" type="Shader" id=4]
+
+[sub_resource type="PhysicsMaterial" id=4]
+friction = 0.0
+bounce = 1.0
+absorbent = true
+
+[sub_resource type="SphereShape" id=1]
+radius = 0.03
+
+[sub_resource type="SphereMesh" id=2]
+radius = 0.025
+height = 0.05
+
+[sub_resource type="SphereMesh" id=3]
+flip_faces = true
+radius = 0.03
+height = 0.06
+
+[sub_resource type="SphereShape" id=5]
+radius = 0.04
+
+[sub_resource type="ShaderMaterial" id=10]
+shader = ExtResource( 4 )
+
+[sub_resource type="SphereMesh" id=6]
+material = SubResource( 10 )
+radius = 0.25
+height = 0.5
+
+[sub_resource type="Curve" id=7]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.5, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[node name="Orange Portal Orb" type="RigidBody"]
+physics_material_override = SubResource( 4 )
+script = ExtResource( 3 )
+
+[node name="Collider" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="Interior" type="MeshInstance" parent="."]
+mesh = SubResource( 2 )
+material/0 = ExtResource( 2 )
+
+[node name="Exterior" type="MeshInstance" parent="."]
+mesh = SubResource( 3 )
+material/0 = ExtResource( 1 )
+
+[node name="CollisionDetect" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="CollisionDetect"]
+shape = SubResource( 5 )
+
+[node name="CPUParticles" type="CPUParticles" parent="."]
+emitting = false
+amount = 1
+one_shot = true
+explosiveness = 1.0
+mesh = SubResource( 6 )
+direction = Vector3( 0, 1, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity_random = 1.0
+angular_velocity = 720.0
+angular_velocity_random = 1.0
+tangential_accel = 1.0
+scale_amount_curve = SubResource( 7 )

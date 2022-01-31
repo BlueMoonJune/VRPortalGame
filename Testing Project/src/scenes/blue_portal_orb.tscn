@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://materials/orbs/interior.tres" type="Material" id=1]
+[ext_resource path="res://materials/orbs/blue_orb_ext.tres" type="Material" id=2]
+
+[sub_resource type="SphereShape" id=1]
+radius = 0.03
+
+[sub_resource type="SphereMesh" id=2]
+radius = 0.025
+height = 0.05
+
+[sub_resource type="SphereMesh" id=3]
+flip_faces = true
+radius = 0.03
+height = 0.06
+
+[node name="Blue Portal Orb" type="RigidBody"]
+
+[node name="Collider" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="Interior" type="MeshInstance" parent="Collider"]
+mesh = SubResource( 2 )
+skeleton = NodePath("../..")
+material/0 = ExtResource( 1 )
+
+[node name="Exterior" type="MeshInstance" parent="Collider"]
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+material/0 = ExtResource( 2 )
