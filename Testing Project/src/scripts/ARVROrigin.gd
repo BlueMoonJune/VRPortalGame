@@ -8,9 +8,14 @@ extends ARVROrigin
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var arvr_interface = ARVRServer.find_interface("Native mobile")
+	var arvr_interface = ARVRServer.find_interface("OpenVR")
 	if arvr_interface and arvr_interface.initialize():
-		get_viewport().arvr = true
+		var viewport = get_viewport()
+		viewport.arvr = true
+		viewport.hdr = false
+		OS.set_window_maximized(true)
+		OS.vsync_enabled = false
+		Engine.target_fps = 180
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
