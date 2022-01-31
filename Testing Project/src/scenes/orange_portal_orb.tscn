@@ -2,7 +2,7 @@
 
 [ext_resource path="res://materials/orbs/orange_orb_ext.tres" type="Material" id=1]
 [ext_resource path="res://materials/orbs/interior.tres" type="Material" id=2]
-[ext_resource path="res://src/scripts/orange_portal_orb.gd" type="Script" id=3]
+[ext_resource path="res://src/scripts/portal_orb.gd" type="Script" id=3]
 [ext_resource path="res://src/shaders/inverse.tres" type="Shader" id=4]
 
 [sub_resource type="PhysicsMaterial" id=4]
@@ -25,11 +25,11 @@ height = 0.06
 [sub_resource type="SphereShape" id=5]
 radius = 0.04
 
-[sub_resource type="ShaderMaterial" id=10]
+[sub_resource type="ShaderMaterial" id=8]
 shader = ExtResource( 4 )
 
 [sub_resource type="SphereMesh" id=6]
-material = SubResource( 10 )
+material = SubResource( 8 )
 radius = 0.25
 height = 0.5
 

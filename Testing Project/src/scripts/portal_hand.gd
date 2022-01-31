@@ -1,7 +1,8 @@
 extends Spatial
 
 
-var scene = load("res://src/scenes/orange_portal_orb.tscn")
+export var path = "res://src/scenes/orange_portal_orb.tscn"
+var scene = load(path)
 var controller : ARVRController
 var pressed2 : bool = false
 

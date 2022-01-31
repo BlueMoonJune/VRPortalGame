@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://src/scripts/left_portal_hand.gd" type="Script" id=1]
+[ext_resource path="res://src/scripts/portal_hand.gd" type="Script" id=1]
 [ext_resource path="res://materials/hands/Glow.material" type="Material" id=2]
 [ext_resource path="res://materials/hands/Strap.material" type="Material" id=3]
 [ext_resource path="res://materials/hands/Black.material" type="Material" id=4]
