@@ -20,9 +20,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
 	move_and_slide(debugMove().rotated(Vector3.UP,rotation.y)*speed)
-	
+
 	$Camera.rotation_degrees.x = camera_angle.x
 	self.rotation_degrees.y = camera_angle.y
 
@@ -33,7 +32,7 @@ func getInput():
 		Input.is_action_just_pressed("orange-portal"),
 		Input.is_action_just_pressed("teleport")
 	]
-	
+
 func debugMove():
 	return Vector3 (
 		int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left")),

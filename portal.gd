@@ -17,12 +17,12 @@ func _process(delta):
 	var portal_transform = self.global_transform.affine_inverse() * p_camera.global_transform
 	var paired_portal_transform = paired_portal.global_transform * portal_transform
 	s_camera.global_transform = paired_portal_transform
-	
+
 	if area.overlaps_body(p_camera.get_parent()):
 		p_camera.get_parent().set_collision_mask_bit(4,false)
 		p_camera.get_parent().set_collision_layer_bit(4,false)
 		print(p_camera.get_parent().collision_mask)
-	else: 
+	else:
 		p_camera.get_parent().set_collision_mask_bit(4,true)
 		p_camera.get_parent().set_collision_layer_bit(4,true)
 		print(p_camera.get_parent().collision_mask)

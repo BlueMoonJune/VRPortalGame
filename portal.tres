@@ -14,7 +14,6 @@ uniform sampler2D TextureUniform;
 
 void vertex() {
 // Output:0
-
 }
 
 void fragment() {
@@ -29,12 +28,10 @@ void fragment() {
 
 // Output:0
 	ALBEDO = n_out2p0;
-
 }
 
 void light() {
 // Output:0
-
 }
 "
 graph_offset = Vector2( -337, -17 )
