@@ -20,7 +20,7 @@ uniform float energy : hint_range( 1.0,20.0) = 2;
 	noise_texを使わないパターン
 
 float random( vec2 pos )
-{ 
+{
 	return fract(sin(dot(pos, vec2(12.9898,78.233))) * 43758.5453);
 }
 

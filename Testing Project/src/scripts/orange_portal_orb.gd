@@ -14,5 +14,3 @@ func _process(delta):
 		scale = Vector3(size,size,size)
 		if size <= 0:
 			queue_free()
-		
-	
