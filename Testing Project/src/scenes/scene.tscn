@@ -19,6 +19,7 @@ radius = 0.2
 [node name="Spatial" type="Spatial"]
 
 [node name="CSGBox" type="CSGBox" parent="."]
+visible = false
 use_collision = true
 width = 10.0
 height = 0.001
@@ -43,13 +44,13 @@ current = true
 [node name="ARVRController" type="ARVRController" parent="KinematicBody/ARVROrigin"]
 
 [node name="left_portal_hand" parent="KinematicBody/ARVROrigin/ARVRController" instance=ExtResource( 1 )]
-transform = Transform( 3.9616e-08, 1.84732e-08, -1, 0.422619, -0.906308, 0, -0.906308, -0.422619, -4.37114e-08, -0.02, 0, 0.1 )
+transform = Transform( 4.75392e-08, 2.21678e-08, -1.2, 0.507143, -1.08757, 8.02699e-14, -1.08757, -0.507143, -5.24537e-08, -0.025, -0.0158971, 0.0875973 )
 
 [node name="ARVRController2" type="ARVRController" parent="KinematicBody/ARVROrigin"]
 controller_id = 2
 
 [node name="right_portal_hand" parent="KinematicBody/ARVROrigin/ARVRController2" instance=ExtResource( 2 )]
-transform = Transform( 3.9616e-08, -1.84732e-08, 1, -0.422619, -0.906307, 0, 0.906308, -0.422618, -4.37114e-08, 0.02, 0, 0.1 )
+transform = Transform( 4.75392e-08, -2.21679e-08, 1.2, -0.507143, -1.08757, 3.24519e-14, 1.08757, -0.507143, -5.24537e-08, 0.025, -0.0158971, 0.0875973 )
 script = ExtResource( 4 )
 path = "res://src/scenes/blue_portal_orb.tscn"
 
