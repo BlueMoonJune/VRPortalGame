@@ -15,5 +15,5 @@ shader_param/tip_color = Color( 0, 0.25098, 1, 1 )
 shader_param/fire_alpha = 1.0
 shader_param/fire_speed = Vector2( 0, 1 )
 shader_param/fire_aperture = 0.22
-shader_param/energy = 2.0
+shader_param/energy = 1.0
 shader_param/noise_tex = SubResource( 2 )

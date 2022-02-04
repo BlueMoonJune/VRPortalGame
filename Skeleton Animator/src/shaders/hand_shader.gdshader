@@ -55,5 +55,6 @@ void fragment( )
 	vec4 fire_color = mix( tip_color, root_color, noise * 0.05 );
 
 	ALPHA = clamp( noise, 0.0, 1.0 ) * fire_alpha;
+	ALBEDO = vec3(0,0,0);
 	EMISSION = fire_color.rgb * energy;
 }

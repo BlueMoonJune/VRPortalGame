@@ -474,3 +474,6 @@ material/2 = ExtResource( 2 )
 mesh = SubResource( 8 )
 skin = SubResource( 3 )
 material/0 = ExtResource( 4 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -0.173648, 0.416198, -0.892539, 0, 0.906308, 0.422618, 0.984808, 0.0733869, -0.157379, 0, 0, 0 )

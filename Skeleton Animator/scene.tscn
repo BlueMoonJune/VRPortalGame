@@ -10,3 +10,5 @@ transform = Transform( -0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, 0
 script = ExtResource( 2 )
 
 [node name="right_portal_hand" parent="." instance=ExtResource( 1 )]
+
+[editable path="right_portal_hand"]
