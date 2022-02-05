@@ -7,8 +7,12 @@ extends KinematicBody
 
 var mouse_relative = Vector2(0,0)
 var camera_angle = Vector3.ZERO
+var move = Vector3.ZERO
 var velocity = Vector3.ZERO
-var speed = 4
+var speed = 3
+var accel = 0.5
+var grav = 0.5
+var jump = 8
 
 var sensitivity = 1
 
@@ -19,8 +23,20 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	move_and_slide(debugMove().rotated(Vector3.UP,rotation.y)*speed)
+func _physics_process(delta):
+	if is_on_floor():
+		move = move.move_toward(debugMove().rotated(Vector3.UP,rotation.y)*speed,accel)
+		velocity = move
+		if Input.is_action_just_pressed("ui_accept"):
+			velocity.y = jump
+		else:
+			velocity.y = -0.001
+	else:
+		velocity.y -= grav
+		
+	
+	
+	move_and_slide(velocity, Vector3.UP)
 
 	$Camera.rotation_degrees.x = camera_angle.x
 	self.rotation_degrees.y = camera_angle.y
