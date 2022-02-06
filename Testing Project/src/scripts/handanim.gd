@@ -1,13 +1,7 @@
 extends Spatial
 
-export var path = "res://src/scenes/orange_portal_orb.tscn"
-var scene : Spatial = null
-var projectile : PackedScene
-var controller : ARVRController
-var pressed2 : bool = false
-var prevpos : Vector3 = Vector3(0,0,0)
-
 var skel : Skeleton
+var time : float = 0
 const VZERO : Vector3 = Vector3.ZERO
 const VONE : Vector3 = Vector3(1,1,1)
 var fingers : Array = [0,0,0,0,0]
@@ -82,32 +76,24 @@ func transf(t_position : Vector3, t_rotation : Vector3, t_scale : Vector3):
 		Vector3(0,1,0),deg2rad(t_rotation.y))
 	
 	return(Transform(t_basis,t_position))
+	
+	#zxy
+	
+
+
+func oscil(t : float):
+	return abs(fmod(t,2)-1)
 
 func _ready():
 	skel = $Armature/Skeleton
-	print(skel)
-	projectile = load(path)
-	controller = get_parent()
-	scene = controller.get_tree().root.get_child(0)
 
 func _process(delta):
-	var velocity : Vector3 = controller.global_transform.origin - prevpos
-	if !controller.is_button_pressed(JOY_VR_TRIGGER) or Input.is_action_pressed("ui_accept"):
-		if pressed2:
-			print(velocity)
-			var orb : RigidBody = projectile.instance()
-			scene.add_child(orb)
-			orb.global_transform = Transform(Basis(Vector3(1,0,0),Vector3(0,1,0),Vector3(0,0,1)),global_transform.origin)
-			orb.linear_velocity = velocity / delta
-			pressed2 = false
-	else:
-		pressed2 = true
-	prevpos = controller.global_transform.origin
-	
-	fingers[1] = move_toward(fingers[1],controller.is_button_pressed(11),delta*10)
-	fingers[2] = controller.get_joystick_axis(JOY_VR_ANALOG_TRIGGER)
-	fingers[3] = move_toward(fingers[3],controller.is_button_pressed(JOY_VR_GRIP),delta*10)
-	fingers[4] = controller.get_joystick_axis(JOY_VR_ANALOG_GRIP)
+   #lerp(0,-90,smoothstep(0,1,oscil(time)))
+
+	fingers[1] = move_toward(fingers[1],int(Input.is_action_pressed("indexclose")),delta*10)
+	fingers[2] = Input.get_action_strength("indexclench")
+	fingers[3] = move_toward(fingers[3],int(Input.is_action_pressed("middleclose")),delta*10)
+	fingers[4] = Input.get_action_strength("middleclench")
 	
 	for i in range(0,skel.get_bone_count()-4):
 		var bind = fingerbind[i]

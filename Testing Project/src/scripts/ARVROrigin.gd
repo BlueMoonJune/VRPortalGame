@@ -12,3 +12,7 @@ func _ready():
 		OS.set_window_maximized(true)
 		OS.vsync_enabled = false
 		Engine.target_fps = 180
+		
+func _process(delta):
+	var campos = $ARVRCamera.transform.origin
+	transform.origin = -Vector3(campos.x,0,campos.z)
