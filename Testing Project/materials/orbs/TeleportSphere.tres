@@ -1,33 +1,217 @@
-[gd_resource type="ShaderMaterial" load_steps=4 format=2]
+[gd_resource type="ShaderMaterial" load_steps=22 format=2]
 
-[sub_resource type="Shader" id=1]
+[sub_resource type="VisualShaderNodeTextureUniform" id=1]
+uniform_name = "Noise"
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeScalarOp" id=2]
+output_port_for_preview = 0
+default_input_values = [ 0, 0.0, 1, 0.5 ]
+operator = 1
+
+[sub_resource type="VisualShaderNodeScalarOp" id=3]
+output_port_for_preview = 0
+default_input_values = [ 0, 0.0, 1, 1.0 ]
+
+[sub_resource type="VisualShaderNodeVectorOp" id=4]
+output_port_for_preview = 0
+
+[sub_resource type="VisualShaderNodeInput" id=5]
+input_name = "time"
+
+[sub_resource type="VisualShaderNodeInput" id=19]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeVectorDecompose" id=20]
+output_port_for_preview = 1
+
+[sub_resource type="VisualShaderNodeInput" id=13]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeVectorOp" id=14]
+default_input_values = [ 0, Vector3( 0, 0, 0 ), 1, Vector3( 1, 4, 1 ) ]
+operator = 2
+
+[sub_resource type="VisualShaderNodeScalarClamp" id=21]
+
+[sub_resource type="VisualShaderNodeScalarOp" id=22]
+default_input_values = [ 0, 0.0, 1, -4.0 ]
+operator = 2
+
+[sub_resource type="VisualShaderNodeScalarOp" id=23]
+output_port_for_preview = 0
+operator = 1
+
+[sub_resource type="VisualShaderNodeScalarOp" id=24]
+default_input_values = [ 0, 0.0, 1, 2.5 ]
+
+[sub_resource type="VisualShaderNodeScalarFunc" id=25]
+output_port_for_preview = 0
+function = 12
+
+[sub_resource type="VisualShaderNodeScalarFunc" id=26]
+output_port_for_preview = 0
+function = 31
+
+[sub_resource type="VisualShaderNodeScalarOp" id=27]
+default_input_values = [ 0, 0.0, 1, 0.5 ]
+operator = 1
+
+[sub_resource type="VisualShaderNodeScalarUniform" id=28]
+uniform_name = "Progress"
+
+[sub_resource type="VisualShaderNodeScalarOp" id=15]
+output_port_for_preview = 0
+default_input_values = [ 0, 0.0, 1, 10.0 ]
+operator = 2
+
+[sub_resource type="VisualShader" id=16]
 code = "shader_type spatial;
-render_mode unshaded, cull_disabled, depth_draw_always;
+render_mode depth_draw_always, cull_disabled, specular_schlick_ggx, unshaded, shadows_disabled;
 
-uniform sampler2D noise;
-//uniform float progress : hint_range(0,1);
-uniform float scale : hint_range(1,10);
+uniform sampler2D Noise : hint_albedo;
+uniform float Progress;
 
-float Remap (float value, float from1, float to1, float from2, float to2) {
-    return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+
+
+void vertex() {
+// Output:0
+
 }
 
 void fragment() {
-	float progress = mod(TIME/3.0,1.0);
-	vec3 albedo = vec3((texture(noise, UV*vec2(1.0,scale)+TIME).r - 0.40) * 5.0 + 0.5);
-	ALBEDO = clamp(albedo,0,1);
-	float prog = Remap(progress,0.0,1.0,-1.0/scale,1.0+1.0/scale);
-	float alpha = (UV.y-(1.0-prog))*5.0+texture(noise, UV).r;
-	ALPHA = clamp(alpha,0,1);
-}"
+// Input:3
+	vec3 n_out3p0 = vec3(UV, 0.0);
 
-[sub_resource type="OpenSimplexNoise" id=2]
+// VectorOp:4
+	vec3 n_in4p1 = vec3(1.00000, 4.00000, 1.00000);
+	vec3 n_out4p0 = n_out3p0 * n_in4p1;
 
-[sub_resource type="NoiseTexture" id=3]
+// Input:14
+	float n_out14p0 = TIME;
+
+// VectorOp:13
+	vec3 n_out13p0 = n_out4p0 + vec3(n_out14p0);
+
+// TextureUniform:10
+	vec3 n_out10p0;
+	float n_out10p1;
+	{
+		vec4 n_tex_read = texture(Noise, n_out13p0.xy);
+		n_out10p0 = n_tex_read.rgb;
+		n_out10p1 = n_tex_read.a;
+	}
+
+// ScalarOp:11
+	float n_in11p1 = 0.50000;
+	float n_out11p0 = dot(n_out10p0, vec3(0.333333, 0.333333, 0.333333)) - n_in11p1;
+
+// ScalarOp:9
+	float n_in9p1 = 10.00000;
+	float n_out9p0 = n_out11p0 * n_in9p1;
+
+// ScalarOp:12
+	float n_in12p1 = 1.00000;
+	float n_out12p0 = n_out9p0 + n_in12p1;
+
+// ScalarUniform:48
+	float n_out48p0 = Progress;
+
+// ScalarOp:42
+	float n_in42p1 = -4.00000;
+	float n_out42p0 = n_out48p0 * n_in42p1;
+
+// ScalarOp:44
+	float n_in44p1 = 2.50000;
+	float n_out44p0 = n_out42p0 + n_in44p1;
+
+// Input:23
+	vec3 n_out23p0 = vec3(UV, 0.0);
+
+// VectorDecompose:24
+	float n_out24p0 = n_out23p0.x;
+	float n_out24p1 = n_out23p0.y;
+	float n_out24p2 = n_out23p0.z;
+
+// ScalarOp:43
+	float n_out43p0 = n_out44p0 - n_out24p1;
+
+// ScalarFunc:45
+	float n_out45p0 = abs(n_out43p0);
+
+// ScalarOp:47
+	float n_in47p1 = 0.50000;
+	float n_out47p0 = n_out45p0 - n_in47p1;
+
+// ScalarFunc:46
+	float n_out46p0 = 1.0 - n_out47p0;
+
+// ScalarClamp:40
+	float n_in40p1 = 0.00000;
+	float n_in40p2 = 1.00000;
+	float n_out40p0 = clamp(n_out46p0, n_in40p1, n_in40p2);
+
+// Output:0
+	ALBEDO = vec3(n_out12p0);
+	ALPHA = n_out40p0;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -1801.25, 242.141 )
+modes/cull = 2
+modes/depth_draw = 1
+flags/shadows_disabled = true
+flags/unshaded = true
+nodes/fragment/3/node = SubResource( 13 )
+nodes/fragment/3/position = Vector2( -1400, 0 )
+nodes/fragment/4/node = SubResource( 14 )
+nodes/fragment/4/position = Vector2( -1200, 0 )
+nodes/fragment/9/node = SubResource( 15 )
+nodes/fragment/9/position = Vector2( -400, 0 )
+nodes/fragment/10/node = SubResource( 1 )
+nodes/fragment/10/position = Vector2( -800, 0 )
+nodes/fragment/11/node = SubResource( 2 )
+nodes/fragment/11/position = Vector2( -600, 0 )
+nodes/fragment/12/node = SubResource( 3 )
+nodes/fragment/12/position = Vector2( -200, 0 )
+nodes/fragment/13/node = SubResource( 4 )
+nodes/fragment/13/position = Vector2( -1000, 0 )
+nodes/fragment/14/node = SubResource( 5 )
+nodes/fragment/14/position = Vector2( -1800, 200 )
+nodes/fragment/23/node = SubResource( 19 )
+nodes/fragment/23/position = Vector2( -1620, 400 )
+nodes/fragment/24/node = SubResource( 20 )
+nodes/fragment/24/position = Vector2( -1400, 400 )
+nodes/fragment/40/node = SubResource( 21 )
+nodes/fragment/40/position = Vector2( 200, 200 )
+nodes/fragment/42/node = SubResource( 22 )
+nodes/fragment/42/position = Vector2( -1200, 400 )
+nodes/fragment/43/node = SubResource( 23 )
+nodes/fragment/43/position = Vector2( -800, 400 )
+nodes/fragment/44/node = SubResource( 24 )
+nodes/fragment/44/position = Vector2( -1000, 400 )
+nodes/fragment/45/node = SubResource( 25 )
+nodes/fragment/45/position = Vector2( -600, 400 )
+nodes/fragment/46/node = SubResource( 26 )
+nodes/fragment/46/position = Vector2( -200, 400 )
+nodes/fragment/47/node = SubResource( 27 )
+nodes/fragment/47/position = Vector2( -400, 400 )
+nodes/fragment/48/node = SubResource( 28 )
+nodes/fragment/48/position = Vector2( -1400, 320 )
+nodes/fragment/connections = PoolIntArray( 3, 0, 4, 0, 10, 0, 11, 0, 11, 0, 9, 0, 9, 0, 12, 0, 4, 0, 13, 0, 13, 0, 10, 0, 23, 0, 24, 0, 12, 0, 0, 0, 40, 0, 0, 1, 14, 0, 13, 1, 42, 0, 44, 0, 44, 0, 43, 0, 24, 1, 43, 1, 43, 0, 45, 0, 45, 0, 47, 0, 47, 0, 46, 0, 46, 0, 40, 0, 48, 0, 42, 0 )
+
+[sub_resource type="OpenSimplexNoise" id=17]
+
+[sub_resource type="NoiseTexture" id=18]
 seamless = true
-noise = SubResource( 2 )
+noise = SubResource( 17 )
 
 [resource]
-shader = SubResource( 1 )
-shader_param/scale = 4.0
-shader_param/noise = SubResource( 3 )
+shader = SubResource( 16 )
+shader_param/Progress = 0.25
+shader_param/Noise = SubResource( 18 )

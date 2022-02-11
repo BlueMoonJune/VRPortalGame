@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://materials/orbs/TeleportSphere.tres" type="Material" id=1]
+[ext_resource path="res://src/scenes/Teleport Aura.gd" type="Script" id=2]
+
+[sub_resource type="SphereMesh" id=1]
+
+[node name="Spatial" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+material/0 = ExtResource( 1 )

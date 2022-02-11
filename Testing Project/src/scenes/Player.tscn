@@ -10,7 +10,8 @@ radius = 0.1
 height = 0.1
 
 [sub_resource type="CapsuleShape" id=3]
-radius = 0.2
+radius = 0.25
+height = 1.31009
 
 [sub_resource type="CylinderMesh" id=5]
 top_radius = 0.25
@@ -19,11 +20,13 @@ height = 0.01
 
 [node name="Player" type="KinematicBody"]
 script = ExtResource( 3 )
+VR = false
 
 [node name="ARVROrigin" type="ARVROrigin" parent="."]
 script = ExtResource( 2 )
 
 [node name="ARVRCamera" type="ARVRCamera" parent="ARVROrigin"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56009, 0 )
 current = true
 
 [node name="MeshInstance" type="MeshInstance" parent="ARVROrigin/ARVRCamera"]
@@ -31,18 +34,22 @@ mesh = SubResource( 4 )
 material/0 = null
 
 [node name="Left Controller" type="ARVRController" parent="ARVROrigin"]
+transform = Transform( -3.78552e-08, 0.866025, -0.5, 6.55671e-08, -0.5, -0.866025, -1, -6.55671e-08, -3.78552e-08, -0.1, 1.5, -0.3 )
 
 [node name="Left Hand" parent="ARVROrigin/Left Controller" instance=ExtResource( 4 )]
 transform = Transform( 4.75392e-08, 2.21679e-08, -1.2, 0.771345, -0.919253, 1.3576e-08, -0.919253, -0.771345, -5.06664e-08, -0.025, -0.00548765, 0.0949534 )
+VR = false
 
 [node name="Right Controller" type="ARVRController" parent="ARVROrigin"]
+transform = Transform( 1.19422e-07, -0.866025, 0.5, 4.37114e-08, -0.5, -0.866025, 1, 1.25278e-07, -2.18557e-08, 0.1, 1.5, -0.3 )
 controller_id = 2
 
 [node name="Right Hand" parent="ARVROrigin/Right Controller" instance=ExtResource( 5 )]
 transform = Transform( 4.75392e-08, -2.21679e-08, 1.2, -0.771345, -0.919253, 1.3576e-08, 0.919253, -0.771345, -5.06664e-08, 0.025, -0.00548765, 0.0949534 )
+VR = false
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.7, 0 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.905046, 0 )
 shape = SubResource( 3 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
